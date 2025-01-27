@@ -8,7 +8,7 @@
   </head>
   <body style="text-align: center; padding: 0; border: 0; margin: 0;">
     <canvas id="unity-canvas" width=600 height=1200 tabindex="-1" style="width: 600px; height: 1200px; background: #231F20"></canvas>
-    <script src="Build/telegram-app-build.loader.js"></script>
+    <script src="Build/telegram-app-build-dev.loader.js"></script>
     <script>
       var meta = document.createElement('meta');
       meta.name = 'viewport';
@@ -28,13 +28,13 @@
 
       createUnityInstance(document.querySelector("#unity-canvas"), {
         arguments: [],
-        dataUrl: "Build/telegram-app-build.data",
-        frameworkUrl: "Build/telegram-app-build.framework.js",
-        codeUrl: "Build/telegram-app-build.wasm",
+        dataUrl: "Build/telegram-app-build-dev.data",
+        frameworkUrl: "Build/telegram-app-build-dev.framework.js",
+        codeUrl: "Build/telegram-app-build-dev.wasm",
         streamingAssetsUrl: "StreamingAssets",
         companyName: "DefaultCompany",
         productName: "Telegram_app",
-        productVersion: "0.2",
+        productVersion: "0.5",
         matchWebGLToCanvasSize: true
       }).then((unity_instance) => {
         window.UNITY_INSTANCE = unity_instance;

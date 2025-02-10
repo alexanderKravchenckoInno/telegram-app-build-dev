@@ -85,6 +85,15 @@
           }
       };
 
+      // Обработчик клика по кнопке
+      connectButton.addEventListener('click', async () => {
+            if (tonConnectUI.connected) {
+                await tonConnectUI.disconnect();
+            } else {
+                await tonConnectUI.connectWallet();
+            }
+        });
+
       // Подписка на изменения статуса подключения
       tonConnectUI.onStatusChange(wallet => {
             if (wallet) {

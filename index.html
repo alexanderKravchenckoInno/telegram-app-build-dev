@@ -3,12 +3,17 @@
   <head>
     <meta charset="utf-8">
     <meta http-equiv="Content-Type" content="text/html; charset=utf-8">
-    <script src="https://telegram.org/js/telegram-web-app.js"></script>    
+    <script src="https://telegram.org/js/telegram-web-app.js"></script>  
+    <script src="https://unpkg.com/@tonconnect/ui@latest/dist/tonconnect-ui.min.js"></script>  
     <title>Unity Web Player | Telegram_app</title>
   </head>
   <body style="text-align: center; padding: 0; border: 0; margin: 0;">
     <canvas id="unity-canvas" width=600 height=1200 tabindex="-1" style="width: 600px; height: 1200px; background: #231F20"></canvas>
     <script src="Build/telegram-app-build-dev.loader.js"></script>
+    
+    <button id="connect-button">Connect Wallet</button>
+    <div id="wallet-info"></div>
+
     <script>
       var meta = document.createElement('meta');
       meta.name = 'viewport';
@@ -26,47 +31,73 @@
         console.log(`TG APP - FRONT - ${value}`)
       }
 
-      createUnityInstance(document.querySelector("#unity-canvas"), {
-        arguments: [],
-        dataUrl: "Build/telegram-app-build-dev.data",
-        frameworkUrl: "Build/telegram-app-build-dev.framework.js",
-        codeUrl: "Build/telegram-app-build-dev.wasm",
-        streamingAssetsUrl: "StreamingAssets",
-        companyName: "DefaultCompany",
-        productName: "Telegram_app",
-        productVersion: "0.54",
-        matchWebGLToCanvasSize: true
-      }).then((unity_instance) => {
-        window.UNITY_INSTANCE = unity_instance;
-        const initData = window.Telegram.WebApp.initData;
-        const params = new URLSearchParams(initData);
-        // const initData = "user=%7B%22id%22%3A473553081%2C%22first_name%22%3A%22Alexandr%22%2C%22last_name%22%3A%22Kravchenko%22%2C%22username%22%3A%22aleksandr_kravchenko01%22%2C%22language_code%22%3A%22en%22%2C%22allows_write_to_pm%22%3Atrue%2C%22photo_url%22%3A%22https%3A%5C%2F%5C%2Ft.me%5C%2Fi%5C%2Fuserpic%5C%2F320%5C%2FhFMExNRKwsgpxDfpeRyFw_Pls6SikioX0Il62MyeqdQ.svg%22%7D&chat_instance=-7576424754045604166&chat_type=sender&auth_date=1733916619&signature=FINg5a_awPsmaNfkKYaNdd6DHJfVEPrfJVEkQaEU2WhVAURHebnaSMcaoJrnosAK9f2H_gxZPBNP_jS9DpKpBg&hash=ade3d3a60733316914ec6fc9a9d8f385565d1aabe6a53527cf1d1c5f4a9b15b5";
+      // createUnityInstance(document.querySelector("#unity-canvas"), {
+      //   arguments: [],
+      //   dataUrl: "Build/telegram-app-build-dev.data",
+      //   frameworkUrl: "Build/telegram-app-build-dev.framework.js",
+      //   codeUrl: "Build/telegram-app-build-dev.wasm",
+      //   streamingAssetsUrl: "StreamingAssets",
+      //   companyName: "DefaultCompany",
+      //   productName: "Telegram_app",
+      //   productVersion: "0.54",
+      //   matchWebGLToCanvasSize: true
+      // }).then((unity_instance) => {
+      //   window.UNITY_INSTANCE = unity_instance;
+      //   const initData = window.Telegram.WebApp.initData;
+      //   const params = new URLSearchParams(initData);
+      //   // const initData = "user=%7B%22id%22%3A473553081%2C%22first_name%22%3A%22Alexandr%22%2C%22last_name%22%3A%22Kravchenko%22%2C%22username%22%3A%22aleksandr_kravchenko01%22%2C%22language_code%22%3A%22en%22%2C%22allows_write_to_pm%22%3Atrue%2C%22photo_url%22%3A%22https%3A%5C%2F%5C%2Ft.me%5C%2Fi%5C%2Fuserpic%5C%2F320%5C%2FhFMExNRKwsgpxDfpeRyFw_Pls6SikioX0Il62MyeqdQ.svg%22%7D&chat_instance=-7576424754045604166&chat_type=sender&auth_date=1733916619&signature=FINg5a_awPsmaNfkKYaNdd6DHJfVEPrfJVEkQaEU2WhVAURHebnaSMcaoJrnosAK9f2H_gxZPBNP_jS9DpKpBg&hash=ade3d3a60733316914ec6fc9a9d8f385565d1aabe6a53527cf1d1c5f4a9b15b5";
         
-        let user = params.get("user");
-        let auth_date = params.get("auth_date");
-        let hash = params.get("hash");
-        let signature = params.get("signature");
-        let start_param = params.get("start_param");
+      //   let user = params.get("user");
+      //   let auth_date = params.get("auth_date");
+      //   let hash = params.get("hash");
+      //   let signature = params.get("signature");
+      //   let start_param = params.get("start_param");
         
-        var new_data = {
-          user:user,
-          auth_date:auth_date,
-          hash:hash,
-          signature: signature,
-          start_param: start_param,
-        };
+      //   var new_data = {
+      //     user:user,
+      //     auth_date:auth_date,
+      //     hash:hash,
+      //     signature: signature,
+      //     start_param: start_param,
+      //   };
 
-        let new_data_json = JSON.stringify(new_data);
-        logging(new_data_json);
+      //   let new_data_json = JSON.stringify(new_data);
+      //   logging(new_data_json);
 
-        window.UNITY_INSTANCE.SendMessage(
-          "WebBridge",
-          "SetWebAppUserData",
-          new_data_json
-        );
+      //   window.UNITY_INSTANCE.SendMessage(
+      //     "WebBridge",
+      //     "SetWebAppUserData",
+      //     new_data_json
+      //   );
 
-        logging("Complete");
+      //   logging("Complete");
+      // });
+
+      const tonConnectUI = new TON_CONNECT_UI.TonConnectUI({
+        manifestUrl: 'https://<YOUR_APP_URL>/tonconnect-manifest.json',
+        buttonRootId: 'connect-button'
       });
+
+      tonConnectUI.uiOptions = {
+          language: 'ru',
+          uiPreferences: {
+              theme: THEME.DARK
+          }
+      };
+
+      // Подписка на изменения статуса подключения
+      tonConnectUI.onStatusChange(wallet => {
+            if (wallet) {
+                connectButton.textContent = 'Disconnect';
+                walletInfo.innerHTML = `
+                    Connected: ${wallet.device.appName}
+                    <br>Address: ${wallet.account.address}
+                `;
+            } else {
+                connectButton.textContent = 'Connect Wallet';
+                walletInfo.innerHTML = 'Not connected';
+            }
+        });
 
     </script>
   </body>

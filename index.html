@@ -78,6 +78,8 @@
         buttonRootId: 'connect-button'
       });
 
+      const walletsList = await tonConnectUI.getWallets();
+
       tonConnectUI.uiOptions = {
           language: 'ru',
           uiPreferences: {
@@ -87,11 +89,13 @@
 
       // Обработчик клика по кнопке
       connectButton.addEventListener('click', async () => {
-            if (tonConnectUI.connected) {
-                await tonConnectUI.disconnect();
-            } else {
-                await tonConnectUI.connectWallet();
-            }
+        await tonConnectUI.openModal();
+    
+        // if (tonConnectUI.connected) {
+            //     await tonConnectUI.disconnect();
+            // } else {
+            //     await tonConnectUI.connectWallet();
+            // }
         });
 
       // Подписка на изменения статуса подключения

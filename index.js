@@ -66,7 +66,7 @@ window.addEventListener("load", function ()
     streamingAssetsUrl: "StreamingAssets",
     companyName: "DefaultCompany",
     productName: "Telegram_app",
-    productVersion: "0.54",
+    productVersion: "0.6",
     showBanner: unityShowBanner,
   };
 

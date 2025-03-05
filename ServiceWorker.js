@@ -1,4 +1,4 @@
-const cacheName = "DefaultCompany-Telegram_app-0.61";
+const cacheName = "DefaultCompany-Telegram_app-0.62";
 const contentToCache = [
     "Build/telegram-app-build-dev.loader.js",
     "Build/telegram-app-build-dev.framework.js",
